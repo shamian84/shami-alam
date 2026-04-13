@@ -185,7 +185,7 @@ const Projects: React.FC = () => {
     <section id="projects" className="py-28 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-centre mb-16 gap-6">
           <div>
             <p className="section-label mb-3">Selected Work</p>
             <h2 className="font-display text-5xl md:text-6xl font-bold text-white">

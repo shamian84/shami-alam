@@ -147,6 +147,14 @@ const MagneticBtn = ({ children, className, href, ...props }: any) => {
 // ── Hero ──────────────────────────────────────────────────────────────────────
 const Hero: React.FC = () => {
   const [index, setIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(
@@ -235,25 +243,27 @@ const Hero: React.FC = () => {
                   }}
                   data-cursor-hover
                 >
-                  <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5] }}>
-                    <ambientLight intensity={0.2} />
-                    <pointLight
-                      position={[10, 10, 10]}
-                      intensity={2.5}
-                      color="#e74e8a"
-                    />
-                    <pointLight
-                      position={[-10, -8, -5]}
-                      intensity={0.8}
-                      color="#8b5cf6"
-                    />
-                    <pointLight
-                      position={[0, -10, 5]}
-                      intensity={0.5}
-                      color="#06b6d4"
-                    />
-                    <HeroMesh />
-                  </Canvas>
+                  {!isMobile && (
+                    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5] }}>
+                      <ambientLight intensity={0.2} />
+                      <pointLight
+                        position={[10, 10, 10]}
+                        intensity={2.5}
+                        color="#e74e8a"
+                      />
+                      <pointLight
+                        position={[-10, -8, -5]}
+                        intensity={0.8}
+                        color="#8b5cf6"
+                      />
+                      <pointLight
+                        position={[0, -10, 5]}
+                        intensity={0.5}
+                        color="#06b6d4"
+                      />
+                      <HeroMesh />
+                    </Canvas>
+                  )}
                   {/* Glass rim */}
                   <div
                     className="absolute inset-0 rounded-full pointer-events-none"

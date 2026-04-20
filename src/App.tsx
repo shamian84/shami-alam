@@ -30,10 +30,16 @@ const CustomCursor: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      setIsMobile(true);
-      return;
-    }
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia('(max-width: 768px), (pointer: coarse)').matches);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
 
     const onMouseMove = (e: MouseEvent) => {
       mouse.current = { x: e.clientX, y: e.clientY };
@@ -111,7 +117,7 @@ function App() {
       {!loading && (
         <div className="bg-background text-white min-h-screen font-sans relative mesh-bg noise">
           <CustomCursor />
-          <Background3D />
+          {!loading && !window.matchMedia('(max-width: 640px)').matches && <Background3D />}
 
           {/* Subtle grid overlay */}
           <div className="fixed inset-0 grid-overlay pointer-events-none z-0 opacity-60" />

@@ -176,7 +176,7 @@ const LoadingScreen: React.FC<{ onDone: () => void }> = ({ onDone }) => {
               className="w-1.5 h-1.5 rounded-full bg-accent inline-block"
             />
             <span className="text-xs text-gray-400 uppercase tracking-widest font-mono">
-              MERN Developer · Mumbai
+              Software Developer · Mumbai
             </span>
           </motion.div>
 

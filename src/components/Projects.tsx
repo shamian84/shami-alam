@@ -214,7 +214,10 @@ const Projects: React.FC = () => {
           </div>
         </div>
 
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 min-h-[500px]">
+        <motion.div 
+          layout 
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 min-h-[500px]"
+        >
           {filteredProjects.map((project, index) => (
             <TiltCard key={project.id} project={project} index={index} />
           ))}

@@ -90,19 +90,43 @@ const DriftingParticles = ({ count = 80 }: { count?: number }) => {
   );
 };
 
-const Background3D: React.FC = () => (
-  <div className="fixed inset-0 z-0 pointer-events-none">
-    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 1] }} gl={{ alpha: true, antialias: false }}>
-      <React.Suspense fallback={null}>
-        <AnimatedStars />
-        <DriftingParticles count={100} />
-        <FloatingRing position={[-7, 2.5, -6]} color="#e74e8a" scale={3.5} speed={1.0} />
-        <FloatingRing position={[6, -3, -9]} color="#8b5cf6" scale={3.0} speed={0.8} />
-        <FloatingRing position={[0, 5, -12]} color="#06b6d4" scale={5} speed={0.6} />
-        <FloatingRing position={[8, 4, -7]} color="#e74e8a" scale={2} speed={1.4} />
-      </React.Suspense>
-    </Canvas>
-  </div>
-);
+const Background3D: React.FC = () => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-0 pointer-events-none">
+      <Canvas
+        dpr={isMobile ? [1, 1] : [1, 1.5]}
+        camera={{ position: [0, 0, 1] }}
+        gl={{ 
+          alpha: true, 
+          antialias: false,
+          powerPreference: "high-performance",
+          preserveDrawingBuffer: false,
+        }}
+      >
+        <React.Suspense fallback={null}>
+          <AnimatedStars />
+          <DriftingParticles count={isMobile ? 40 : 100} />
+          {!isMobile && (
+            <>
+              <FloatingRing position={[-7, 2.5, -6]} color="#e74e8a" scale={3.5} speed={1.0} />
+              <FloatingRing position={[6, -3, -9]} color="#8b5cf6" scale={3.0} speed={0.8} />
+              <FloatingRing position={[0, 5, -12]} color="#06b6d4" scale={5} speed={0.6} />
+              <FloatingRing position={[8, 4, -7]} color="#e74e8a" scale={2} speed={1.4} />
+            </>
+          )}
+        </React.Suspense>
+      </Canvas>
+    </div>
+  );
+};
 
 export default Background3D;

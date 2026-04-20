@@ -158,7 +158,7 @@ const Services: React.FC = () => {
 
                 {/* Title */}
                 <motion.h3
-                  className="flex-1 font-display text-3xl md:text-5xl lg:text-6xl font-bold uppercase transition-colors duration-300"
+                  className="flex-1 font-display text-[clamp(1.5rem,6vw,3.75rem)] font-bold uppercase transition-colors duration-300"
                   style={{
                     color:
                       active === i ? service.color : "rgba(255,255,255,0.7)",
